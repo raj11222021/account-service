@@ -8,6 +8,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @EnableFeignClients // provides declarative REST client
 @EnableDiscoveryClient // enable us to discover the network location of dependent services
+// this is comment
 public class AccountApplication {
 
     public static void main(String[] args) {

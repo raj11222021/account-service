@@ -59,5 +59,5 @@ node('builder'){
 			sh 'docker push snehalj/assetvalidator:${TIME}'
 		 }
 	}
-
+}
 }

@@ -56,7 +56,8 @@ node('kubernetes'){
 			unstash 'dfile'
 			unstash 'efile'
 			sh 'ls'
-			sh 'podman build -t account-service .'			
+			sh 'podman build -t account-service .'		
+				sh 'kubectl create -h'
 		     }
 	  }
   }

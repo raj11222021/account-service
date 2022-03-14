@@ -1,10 +1,6 @@
-podTemplate(cloud: 'kubernetes',label: 'builder',
+podTemplate(cloud: 'kubernetes',label: 'kubernetes',
             containers: [
-                    containerTemplate(name: 'jnlp', image: 'ninech/jnlp-slave-with-docker', privileged: true, args: '${computer.jnlpmac} ${computer.name}')
-                    
-            ],
-            volumes: [
-                    hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock')
+                    containerTemplate(name: 'podman', image: 'quay.io/containers/podman', privileged: true, command: 'cat', ttyEnabled: true)
 					
             ]) 
 {
@@ -44,20 +40,24 @@ node{
               }
           }
       }*/
+	
+	 stage('Code Build') 
+	{
+		sh 'mvn package'
+		stash includes: 'Dockerfile', name: 'dfile'
+		stash includes: 'target/', name: 'efile'
+	 }
 }
 
-node('builder'){
-   container('jnlp') {
+node('kubernetes'){
+   container('podman') {
 			stage('build')
 			{
 			unstash 'dfile'
 			unstash 'efile'
-			sh 'docker build -t snehalj/assetvalidator:${TIME} .'			
-			withCredentials([usernamePassword(credentialsId: 'snehaldockerhub', passwordVariable: 'PWDD', usernameVariable: 'USER')]) {
-           			 sh 'docker login -u=$USER -p=$PWDD'
-			}
-			sh 'docker push snehalj/assetvalidator:${TIME}'
-		 }
+			sh 'podman build -t account-service .'			
+		     }
 	}
+}
 }
 }

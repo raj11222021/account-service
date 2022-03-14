@@ -1,3 +1,13 @@
+podTemplate(cloud: 'openshift',label: 'builder',
+            containers: [
+                    containerTemplate(name: 'jnlp', image: 'ninech/jnlp-slave-with-docker', privileged: true, args: '${computer.jnlpmac} ${computer.name}')
+                    
+            ],
+            volumes: [
+                    hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock')
+					
+            ]) 
+{
 node{
  def MAVEN_HOME = tool "mymaven"
  env.PATH = "${env.PATH}:${MAVEN_HOME}/bin"
@@ -34,4 +44,21 @@ node{
               }
           }
       }
+}
+
+stage('build')
+	{
+	node('builder'){
+				
+		container('jnlp') {
+			unstash 'dfile'
+			unstash 'efile'
+			sh 'docker build -t snehalj/assetvalidator:${TIME} .'			
+			withCredentials([usernamePassword(credentialsId: 'snehaldockerhub', passwordVariable: 'PWDD', usernameVariable: 'USER')]) {
+           			 sh 'docker login -u=$USER -p=$PWDD'
+			}
+			sh 'docker push snehalj/assetvalidator:${TIME}'
+		 }
+	}
+}
 }

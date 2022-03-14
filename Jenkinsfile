@@ -46,11 +46,10 @@ node{
       }
 }
 
-stage('build')
-	{
-	node('builder'){
-				
-		container('jnlp') {
+node('builder'){
+   container('jnlp') {
+			stage('build')
+			{
 			unstash 'dfile'
 			unstash 'efile'
 			sh 'docker build -t snehalj/assetvalidator:${TIME} .'			
@@ -60,5 +59,5 @@ stage('build')
 			sh 'docker push snehalj/assetvalidator:${TIME}'
 		 }
 	}
-}
+
 }

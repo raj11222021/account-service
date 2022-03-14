@@ -1,4 +1,4 @@
-podTemplate(cloud: 'openshift',label: 'builder',
+podTemplate(cloud: 'kubernetes',label: 'builder',
             containers: [
                     containerTemplate(name: 'jnlp', image: 'ninech/jnlp-slave-with-docker', privileged: true, args: '${computer.jnlpmac} ${computer.name}')
                     

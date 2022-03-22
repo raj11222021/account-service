@@ -57,24 +57,11 @@ node('kubernetes'){
 			{
 			unstash 'dfile'
 			unstash 'efile'
-			sh 'podman build -t quay.io/raj11222021/account-service:latest .'		
-				
-				withCredentials([usernamePassword(credentialsId: 'dockerid', passwordVariable: 'PWDD', usernameVariable: 'USER')]) {
-					sh 'podman login quay.io -u=$USER -p=$PWDD'	
-			
-				}
-			sh 'podman push quay.io/raj11222021/account-service:latest'
-   
-		     }
+			sh 'podman build -t quay.io/raj11222021/account-service:latest .' 
+		       }
 	  }
   }
 	
-	node {
-		
-		stage('Deploy'){
-			sh 'ls -l'
-			sh '/tmp/kubectl apply -f k8s/'
-		}
-	}
+
 
 }

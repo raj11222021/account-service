@@ -5,7 +5,7 @@ metadata:
   labels:
     app: account-service
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: account-service
@@ -16,4 +16,4 @@ spec:
     spec:
       containers:
       - name: account-service
-        image: account-service:1.14.2
+        image: quay.io/raj11222021/account-service:latest

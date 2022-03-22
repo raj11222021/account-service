@@ -63,7 +63,7 @@ node('kubernetes'){
 			
 			
 		}
-		sh 'podman push raj11222021/accountservice:${TIME}'
+		sh 'podman push raj11222021/accountservice:v1'
    
 		     }
 	  }

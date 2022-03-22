@@ -73,6 +73,7 @@ node('kubernetes'){
 		
 		stage('Deploy'){
 			sh '/tmp/kubectl get pods'
+		}
 	}
-}
 
+}

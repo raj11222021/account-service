@@ -7,8 +7,7 @@ podTemplate(cloud: 'kubernetes',label: 'kubernetes',
 node{
  def MAVEN_HOME = tool "mymaven"
  env.PATH = "${env.PATH}:${MAVEN_HOME}/bin"
- def now = new Date()
- env.TIME = now.format("yyMMdd.HHmm", TimeZone.getTimeZone('UTC'))
+
   
   stage('checkout'){  
        checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/raj11222021/account-service.git']]])
@@ -66,6 +65,15 @@ node('kubernetes'){
 		       }
 	  }
   }
+	
+	node{
+		stage('Dev Deploy'){
+			
+			sh '/tmp/kubectl apply -f k8s/Deployment.yaml'
+			
+		}
+		
+	}
 	
 
 

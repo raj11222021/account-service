@@ -58,6 +58,7 @@ node('kubernetes'){
 			unstash 'dfile'
 			unstash 'efile'
 			sh 'ls'
+				sh 'podman version'
 			sh 'podman build -t docker.io/raj11222021/account-service:${TIME} .'		
 				
 				withCredentials([usernamePassword(credentialsId: 'dockerid', passwordVariable: 'PWDD', usernameVariable: 'USER')]) {

@@ -57,7 +57,7 @@ node('kubernetes'){
 			unstash 'efile'
 			sh 'ls'
 			sh 'podman build -t account-service .'		
-				sh 'kubectl create -h'
+				
 				withCredentials([usernamePassword(credentialsId: 'dockerid', passwordVariable: 'PWDD', usernameVariable: 'USER')]) {
            			 sh 'podman login -u=$USER -p=$PWDD'
 			

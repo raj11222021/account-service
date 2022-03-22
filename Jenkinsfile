@@ -72,7 +72,8 @@ node('kubernetes'){
 	node {
 		
 		stage('Deploy'){
-			sh '/tmp/kubectl get pods'
+			sh 'ls -l'
+			sh '/tmp/kubectl apply -f k8s/'
 		}
 	}
 

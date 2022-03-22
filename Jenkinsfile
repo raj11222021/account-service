@@ -59,14 +59,14 @@ node('kubernetes'){
 			unstash 'efile'
 			sh 'ls'
 				sh 'podman version'
-			sh 'podman build -t docker.io/raj11222021/account-service:${TIME} .'		
+			sh 'podman build -t quay.io/raj11222021/account-service:${TIME} .'		
 				
 				withCredentials([usernamePassword(credentialsId: 'dockerid', passwordVariable: 'PWDD', usernameVariable: 'USER')]) {
            			 sh 'podman login -u=$USER -p=$PWDD'
 			
 			
 		}
-		sh 'podman push docker.io/raj11222021/account-service:${TIME}'
+		sh 'podman push quay.io/raj11222021/account-service:${TIME}'
    
 		     }
 	  }
